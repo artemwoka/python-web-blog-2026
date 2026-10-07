@@ -3,16 +3,27 @@
 {% block title %}Мій блог{% endblock  %}
 
 {% block content %}
-    <h1>Мій блог</h1>
-    {% for post in posts %}
-        <h2>
-            <a href="{% url "blog:post_detail" post.id %}">{{ post.title }}</a>
-        </h2>
-        <p>
-            Опубліковано: {{ post.publish }} | автором: {{ post.author }}
-        </p>
-        {{ post.body|truncatewords:30|linebreaks}}
-    {% endfor %}
-
+    <section>
+        <header>
+            <h2> Нові пости</h2>
+        </header>
+        {% for post in posts %}
+            <aside>
+                <h3>
+                    <a href="{% url "blog:post_detail" post.id %}">
+                        <b>
+                            {{ post.title }}
+                        </b>
+                    </a>
+                </h3>
+                <p>
+                    <small>
+                        🗓️ {{ post.publish }} | автором: {{ post.author }}
+                    </small>
+                </p>
+                {{ post.body|truncatewords:20|linebreaks}}
+            </aside>
+        {% endfor %}
+    </section>
 {% endblock  %}
 

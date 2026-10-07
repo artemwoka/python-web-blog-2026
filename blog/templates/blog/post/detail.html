@@ -5,7 +5,7 @@
 {% block content %}
     <h1>{{ post.title }}</h1>
     <p>
-        Опубліковано {{ post.publish }}  автором {{ post.author }}
+        <i>🗓️ {{ post.publish }} | автором: {{ post.author }}</i>
     </p>
     {{ post.body|linebreaks }}
 {% endblock content %}

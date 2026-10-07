@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock  %}</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
 </head>
 <body>
+    <header>
+        <h1>Мій блог</h1>
+    </header>
     <main>
+        <hr>
         {% block content %}
         {% endblock  %}
     </main>
-    <div>
-        <h2>Мій блог</h2>
-        <p>Це мій блог</p>
-    </div>
+    <footer>
+        <hr>
+        <p><small>&copy; 2026 Мій блог</small></p>
+    </footer>
 </body>
 </html>
