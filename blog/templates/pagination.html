@@ -1,0 +1,9 @@
+<section>
+    {% if page.has_previous %}
+        <a href="?page={{ page.previous_page_number}}"><i>Попередня</i></a>
+    {% endif %}
+    &nbsp;<a href="?page={{ page.number }}"><b>{{ page.number }} з {{ page.paginator.num_pages }}</b></a>&nbsp;
+    {% if page.has_next %}
+        <a href="?page={{ page.next_page_number }}"><i>Наступна</i></a>
+    {% endif %}
+</section>
