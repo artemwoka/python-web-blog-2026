@@ -10,7 +10,7 @@
         {% for post in posts %}
             <aside>
                 <h3>
-                    <a href="{% url "blog:post_detail" post.id %}">
+                    <a href="{{ post.get_absolute_url }}">
                         <b>
                             {{ post.title }}
                         </b>
