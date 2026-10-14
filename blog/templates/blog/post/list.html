@@ -11,20 +11,16 @@
             <aside>
                 <h3>
                     <a href="{{ post.get_absolute_url }}">
-                        <b>
-                            {{ post.title }}
-                        </b>
+                        <b>{{ post.title }}</b>
                     </a>
                 </h3>
                 <p>
-                    <small>
-                        🗓️ {{ post.publish }} | автором: {{ post.author }}
-                    </small>
+                    <small>🗓️ {{ post.publish }} | автором: {{ post.author }}</small>
                 </p>
                 {{ post.body|truncatewords:20|linebreaks}}
             </aside>
         {% endfor %}
     </section>
-    {% include "pagination.html" with page=posts%}
+    {% include "pagination.html" with page=page_obj%}
 {% endblock  %}
 
