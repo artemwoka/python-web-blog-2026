@@ -15,7 +15,14 @@
                     </a>
                 </h3>
                 <p>
-                    <small>🗓️ {{ post.publish }} | автором: {{ post.author }}</small>
+                    <small>
+                        🗓️ {{ post.publish }} | автором: {{ post.author }}   
+                    {% with post.tags.all as tags %}          
+                        {% if tags %}               
+                            <br>🏷️ {{ tags|join:", " }}              
+                        {% endif %}
+                    {% endwith %}
+                    </small>
                 </p>
                 {{ post.body|truncatewords:20|linebreaks}}
             </aside>

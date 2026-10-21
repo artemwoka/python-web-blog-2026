@@ -1,10 +1,11 @@
 from django.core.mail import send_mail
-from django.core.paginator import Paginator, EmptyPage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 
-from .forms import EmailPostForm
-from .models import Post
+from .forms import EmailPostForm, CommentForm
+from .models import Post, Comment
 
 
 class PostListView(ListView):
@@ -38,7 +39,11 @@ def post_detail(request, year, month, day, post):
         publish__month=month,
         publish__day=day
     )
-    return render(request, 'blog/post/detail.html', {'post': post})
+    # Список активних коментарів для цього поста
+    comments = post.comments.filter(active=True)
+    # Форма для коментарів
+    form = CommentForm()
+    return render(request, 'blog/post/detail.html', {'post': post, 'comments': comments, 'form': form})
 
 def post_share(request, post_id):
     # Отримати пост за його id
@@ -61,3 +66,27 @@ def post_share(request, post_id):
     else:
         form = EmailPostForm()
     return render(request, 'blog/post/share.html', {'post': post, 'form': form, 'sent': sent})
+
+
+@require_POST
+def post_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
+    comment = None
+    # Коментар був надісланий
+    form = CommentForm(data=request.POST)
+    if form.is_valid():
+        # Створити об'єкт коментаря
+        comment = form.save(commit=False)
+        # Прив'язати коментар до поточного поста
+        comment.post = post
+        # Зберегти коментар в базі даних
+        comment.save()
+    return render(
+        request,
+        'blog/post/comment.html',
+        context = {
+            'post': post,
+            'form': form,
+            'comment': comment
+        }
+    )

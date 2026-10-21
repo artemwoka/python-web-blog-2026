@@ -1,0 +1,8 @@
+<section>
+<form action="{% url 'blog:post_comment' post.id %}" method="post">
+    <header>Додати новий коментар</header>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Додати коментар</button>
+</form>
+</section>
